@@ -1,0 +1,138 @@
+package GUI;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import BusinessObjects.BusinessProcess;
+import BusinessObjects.Phrase;
+import BusinessObjects.Repository;
+import Controller.DefineBusinessProcessController;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class CreateStepDialog extends JDialog {
+	private JLabel lblVerb;
+	private JLabel lblNoun;
+	private JTextField txtVerb;
+	private JTextField txtNoun;
+	private JLabel lblSentance;
+	private JTextField txtSentance;
+	private JLabel lblSequenceNumber;
+	private JComboBox cbSequenceNumber;
+
+	/**
+	 * Launch the application.
+	 */
+	/*main
+	 * public static void main(String[] args) {
+		try {
+			CreateBusinessProcessDialog dialog = new CreateBusinessProcessDialog();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+*/
+	/**
+	 * Create the dialog.
+	 */
+	public CreateStepDialog(Phrase phrase) {
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(null);
+		
+			
+				
+				
+				
+					txtVerb = new JTextField(phrase.getVerb());
+					txtVerb.setBounds(171, 44, 86, 22);
+					getContentPane().add(txtVerb);
+					lblVerb = new JLabel("Verb : ");
+					lblVerb.setBounds(104, 41, 71, 28);
+					getContentPane().add(lblVerb);
+					//txtVerb.setFont(font);				
+				//	txtVerb.setOpaque(false);
+					txtNoun = new JTextField(phrase.getNoun());
+					txtNoun.setBounds(171, 79, 86, 22);
+					getContentPane().add(txtNoun);
+					lblNoun = new JLabel("Noun : ");
+					lblNoun.setBounds(104, 82, 64, 22);
+					getContentPane().add(lblNoun);
+					txtSentance = new JTextField(phrase.getSentence());
+					txtSentance.setBounds(171, 114, 216, 22);
+					getContentPane().add(txtSentance);
+					
+					lblSentance=new JLabel("Sentence : ");
+					lblSentance.setBounds(104, 114, 71, 22);
+					getContentPane().add(lblSentance);
+					
+					JComboBox cbSequenceNumber = new JComboBox();
+					cbSequenceNumber.setBounds(171, 146, 86, 22);
+					getContentPane().add(cbSequenceNumber);
+					
+					JLabel lblNewLabel = new JLabel("Sequence No : ");
+					lblNewLabel.setBounds(104, 149, 56, 16);
+					getContentPane().add(lblNewLabel);
+				
+						JButton createButton = new JButton("Create");
+						createButton.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent arg0) {
+							}
+						});
+						createButton.setBounds(164, 201, 93, 22);
+						getContentPane().add(createButton);
+						createButton.setActionCommand("OK");
+						getRootPane().setDefaultButton(createButton);
+					
+					
+
+					lblSequenceNumber = new JLabel("Sequence Number : ");
+					//cbSequenceNumber = new JComboBox<>();	
+					
+					DefineBusinessProcessController dbpController= new DefineBusinessProcessController();
+					
+					int numberOfBusinessProcess=dbpController.getBusinessProcesses().size();
+					
+					for(int i = 1; i <=( numberOfBusinessProcess+1); i++)
+						cbSequenceNumber.addItem(i);
+					
+					cbSequenceNumber.setSelectedIndex(numberOfBusinessProcess);
+				//	this.setvi
+					
+					
+					
+					
+					createButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg) {
+							
+							DefineBusinessProcessController dbpController= new DefineBusinessProcessController();
+							System.out.println( " "+cbSequenceNumber.getSelectedIndex());
+							
+							dbpController.createBusinessProcess(txtVerb.getText(), txtNoun.getText(), txtSentance.getText(), cbSequenceNumber.getSelectedIndex());
+							
+							
+							dispose();
+							
+						}
+					});
+					
+					/*if(component.getParent()==null)
+						cbSequenceNumber.setSelectedIndex(cbSequenceNumber.getItemCount()-1);
+					else
+						cbSequenceNumber.setSelectedIndex(Repository.getInstance().getIndex((BusinessProcess)component));
+					*/
+					
+					
+				}
+	
+}
